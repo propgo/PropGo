@@ -70,7 +70,12 @@
     "overrides": {
       "react": "19.0.0",
       "react-dom": "19.0.0"
-    }
+    },
+    "ignoredBuiltDependencies": [
+      "esbuild",
+      "sharp",
+      "unrs-resolver"
+    ]
   },
   "lint-staged": {
     "*.{ts,tsx,js,jsx}": [
