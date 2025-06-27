@@ -1,7 +1,7 @@
 import { createMcpHandler } from '@vercel/mcp-adapter';
 import { z } from 'zod';
 
-export const runtime = 'edge';
+export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
 
 const handler = createMcpHandler(
