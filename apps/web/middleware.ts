@@ -32,7 +32,7 @@ export async function middleware(request: NextRequest) {
     // Get the current session
     const { data: { session }, error } = await supabase.auth.getSession()
     
-    console.log('Middleware - pathname:', pathname, 'session exists:', !!session)
+    console.log('🔀 Middleware - pathname:', pathname, 'session exists:', !!session, 'user:', session?.user?.email)
 
     // Define public routes that don't require authentication
     const publicRoutes = [
@@ -41,7 +41,9 @@ export async function middleware(request: NextRequest) {
       '/auth/forgot-password',
       '/auth/reset-password',
       '/auth/callback',
+      '/auth/verify',
       '/',
+      '/debug', // Allow debug page for testing
     ]
 
     // Define protected routes that require authentication
@@ -60,59 +62,20 @@ export async function middleware(request: NextRequest) {
 
     // If no session and trying to access protected route, redirect to sign in
     if (!session && isProtectedRoute) {
+      console.log('🔀 No session + protected route → redirecting to sign-in')
       const signInUrl = new URL('/auth/sign-in', request.url)
       signInUrl.searchParams.set('redirectTo', pathname)
       return NextResponse.redirect(signInUrl)
     }
 
-    // Check if user needs onboarding first (before redirecting from auth pages)
-    if (session && pathname !== '/onboarding' && !pathname.startsWith('/auth/')) {
-      const { data: profile } = await supabase
-        .from('profiles')
-        .select('onboarding_completed')
-        .eq('id', session.user.id)
-        .single()
-
-      // If profile exists but onboarding not completed, redirect to onboarding
-      if (profile && !profile.onboarding_completed) {
-        return NextResponse.redirect(new URL('/onboarding', request.url))
-      }
+    // SIMPLIFIED: If logged in and trying to access auth pages (except home), redirect to dashboard
+    // This avoids complex onboarding checks that can cause loops
+    if (session && pathname.startsWith('/auth/')) {
+      console.log('🔀 Logged in + auth page → redirecting to dashboard')
+      return NextResponse.redirect(new URL('/dashboard', request.url))
     }
 
-    // If logged in and trying to access auth pages, redirect appropriately
-    if (session && isPublicRoute && pathname !== '/') {
-      console.log('User is logged in and on auth page, redirecting...', { pathname, userId: session.user.id })
-      
-      try {
-        // Check onboarding status before deciding where to redirect
-        const { data: profile, error: profileError } = await supabase
-          .from('profiles')
-          .select('onboarding_completed')
-          .eq('id', session.user.id)
-          .single()
-
-        console.log('Profile query result:', { profile, profileError })
-
-        // Redirect to onboarding if not completed, otherwise to dashboard
-        const redirectUrl = profile && !profile.onboarding_completed ? '/onboarding' : '/dashboard'
-        console.log('Redirecting to:', redirectUrl)
-        return NextResponse.redirect(new URL(redirectUrl, request.url))
-      } catch (error) {
-        console.error('Error checking profile:', error)
-        // Default to dashboard if there's an error
-        return NextResponse.redirect(new URL('/dashboard', request.url))
-      }
-    }
-
-    // Refresh session if needed
-    if (session) {
-      const { data: { session: refreshedSession } } = await supabase.auth.getSession()
-      if (!refreshedSession) {
-        // Session is invalid, redirect to sign in
-        return NextResponse.redirect(new URL('/auth/sign-in', request.url))
-      }
-    }
-
+    console.log('🔀 Middleware completed normally for:', pathname)
     return response
   } catch (error) {
     console.error('Middleware error:', error)
