@@ -4,19 +4,11 @@ import React, { createContext, useContext, useEffect, useState } from 'react'
 import { User, Session } from '@supabase/supabase-js'
 import { createClient } from '@supabase/supabase-js'
 
-// Simple client for now - Add debug logging
-console.log('🔧 Auth Context: Environment variables:', {
-  url: process.env.NEXT_PUBLIC_SUPABASE_URL,
-  key: process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ? 'present' : 'missing',
-  nodeEnv: process.env.NODE_ENV
-})
-
+// Simple client for now
 const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
   process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
 )
-
-console.log('🔧 Auth Context: Supabase client created:', supabase)
 
 interface AuthContextType {
   user: User | null
@@ -126,38 +118,22 @@ export function AuthProvider({ children, initialSession }: AuthProviderProps) {
   }
 
   const signIn = async (data: any) => {
-    console.log('🔐 Sign in attempt started:', data.email)
-    console.log('🔐 Supabase client config check:', {
-      url: supabase.supabaseUrl,
-      key: supabase.supabaseKey ? 'present' : 'missing'
+    console.log('Attempting sign in for:', data.email)
+    
+    const { data: result, error } = await supabase.auth.signInWithPassword({
+      email: data.email,
+      password: data.password,
     })
     
-    try {
-      const { data: result, error } = await supabase.auth.signInWithPassword({
-        email: data.email,
-        password: data.password,
-      })
-      
-      console.log('🔐 Sign in raw response:', { result, error })
-      
-      if (error) {
-        console.error('🔐 Sign in error details:', {
-          message: error.message,
-          status: error.status,
-          details: error
-        })
-        return { success: false, error: error.message }
-      }
-      
-      console.log('🔐 Sign in successful! Session details:', {
-        session: result.session,
-        user: result.user
-      })
-      return { success: true, data: result }
-    } catch (err) {
-      console.error('🔐 Sign in unexpected error:', err)
-      return { success: false, error: 'Unexpected error during sign in' }
+    console.log('Sign in result:', { result, error })
+    
+    if (error) {
+      console.error('Sign in error:', error)
+      return { success: false, error: error.message }
     }
+    
+    console.log('Sign in successful, session:', result.session)
+    return { success: true, data: result }
   }
 
   const signOut = async () => {
