@@ -3,5 +3,10 @@
   "framework": "nextjs",
   "buildCommand": "cd ../.. && pnpm install --no-frozen-lockfile && pnpm turbo run build --filter=@propgo/web...",
   "installCommand": null,
-  "outputDirectory": "apps/web/.next"
+  "outputDirectory": ".next",
+  "functions": {
+    "app/api/mcp/route.ts": {
+      "runtime": "nodejs20.x"
+    }
+  }
 } 
