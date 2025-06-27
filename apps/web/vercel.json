@@ -3,5 +3,5 @@
   "framework": "nextjs",
   "buildCommand": "cd ../.. && pnpm install --no-frozen-lockfile && pnpm turbo run build --filter=@propgo/web...",
   "installCommand": null,
-  "outputDirectory": ".next"
+  "outputDirectory": "apps/web/.next"
 } 
