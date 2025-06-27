@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
+import { SignOutButton } from '@/components/auth/sign-out-button'
 
 export const metadata: Metadata = {
   title: 'Dashboard - PropGo.my',
@@ -20,9 +21,7 @@ export default function DashboardPage() {
                 Welcome to PropGo.my - Malaysia's Premier B2B Real Estate Platform
               </p>
             </div>
-            <Button variant="outline">
-              Sign Out
-            </Button>
+            <SignOutButton variant="outline" />
           </div>
         </div>
       </header>
