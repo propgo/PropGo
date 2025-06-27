@@ -75,7 +75,8 @@ export function AuthProvider({ children, initialSession }: AuthProviderProps) {
           full_name: data.fullName,
           role: data.role,
           phone: data.phone,
-        }
+        },
+        emailRedirectTo: `${window.location.origin}/auth/callback`
       }
     })
     
