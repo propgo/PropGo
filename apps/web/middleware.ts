@@ -63,12 +63,7 @@ export async function middleware(request: NextRequest) {
       return NextResponse.redirect(signInUrl)
     }
 
-    // If logged in and trying to access auth pages, redirect to dashboard
-    if (session && isPublicRoute && pathname !== '/') {
-      return NextResponse.redirect(new URL('/dashboard', request.url))
-    }
-
-    // Check if user needs onboarding
+    // Check if user needs onboarding first (before redirecting from auth pages)
     if (session && pathname !== '/onboarding' && !pathname.startsWith('/auth/')) {
       const { data: profile } = await supabase
         .from('profiles')
@@ -80,6 +75,20 @@ export async function middleware(request: NextRequest) {
       if (profile && !profile.onboarding_completed) {
         return NextResponse.redirect(new URL('/onboarding', request.url))
       }
+    }
+
+    // If logged in and trying to access auth pages, redirect appropriately
+    if (session && isPublicRoute && pathname !== '/') {
+      // Check onboarding status before deciding where to redirect
+      const { data: profile } = await supabase
+        .from('profiles')
+        .select('onboarding_completed')
+        .eq('id', session.user.id)
+        .single()
+
+      // Redirect to onboarding if not completed, otherwise to dashboard
+      const redirectUrl = profile && !profile.onboarding_completed ? '/onboarding' : '/dashboard'
+      return NextResponse.redirect(new URL(redirectUrl, request.url))
     }
 
     // Refresh session if needed

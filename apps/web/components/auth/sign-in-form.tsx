@@ -48,7 +48,7 @@ export function SignInForm() {
         return
       }
 
-      // Redirect to dashboard or onboarding
+      // Let middleware handle the redirect based on onboarding status
       router.push('/dashboard')
     } catch (err) {
       setError('An unexpected error occurred. Please try again.')
