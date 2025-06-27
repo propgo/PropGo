@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import { createClient } from '@supabase/supabase-js'
+import { createBrowserClient } from '@supabase/ssr'
 
 export default function DebugPage() {
   const [debugInfo, setDebugInfo] = useState<any>({})
@@ -22,7 +22,7 @@ export default function DebugPage() {
     try {
       setTestResult('Testing...')
       
-      const supabase = createClient(
+      const supabase = createBrowserClient(
         process.env.NEXT_PUBLIC_SUPABASE_URL!,
         process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
       )
@@ -49,7 +49,7 @@ export default function DebugPage() {
     try {
       setTestResult('Testing sign in...')
       
-      const supabase = createClient(
+      const supabase = createBrowserClient(
         process.env.NEXT_PUBLIC_SUPABASE_URL!,
         process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
       )
@@ -63,8 +63,28 @@ export default function DebugPage() {
         setTestResult(`Sign in error: ${error.message}`)
         console.error('🔧 Sign in test error:', error)
       } else {
-        setTestResult('Sign in successful!')
+        setTestResult(`Sign in successful! User: ${data.session?.user?.email}`)
         console.log('🔧 Sign in test success:', data)
+        
+        // Test getting the session immediately after
+        const { data: sessionData } = await supabase.auth.getSession()
+        console.log('🔧 Session after sign in:', sessionData)
+        
+        // Test profile query
+        if (sessionData.session) {
+          const { data: profile, error: profileError } = await supabase
+            .from('profiles')
+            .select('*')
+            .eq('id', sessionData.session.user.id)
+            .single()
+          
+          console.log('🔧 Profile query:', { profile, profileError })
+          
+          // Try to navigate to dashboard manually
+          setTimeout(() => {
+            window.location.href = '/dashboard'
+          }, 2000)
+        }
       }
     } catch (err) {
       setTestResult(`Sign in unexpected error: ${err}`)
