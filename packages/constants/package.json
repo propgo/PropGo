@@ -1,0 +1,21 @@
+{
+  "name": "@propgo/constants",
+  "version": "0.1.0",
+  "private": true,
+  "main": "src/index.ts",
+  "types": "src/index.ts",
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "lint": "eslint src/",
+    "type-check": "tsc --noEmit"
+  },
+  "dependencies": {
+    "zod": "^3.24.1"
+  },
+  "devDependencies": {
+    "typescript": "^5.8.3",
+    "tsup": "^8.0.2",
+    "eslint": "^9.15.0"
+  }
+} 

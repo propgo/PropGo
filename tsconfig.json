@@ -1,0 +1,43 @@
+{
+  "compilerOptions": {
+    "target": "es2022",
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "allowJs": true,
+    "skipLibCheck": true,
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "noEmit": true,
+    "esModuleInterop": true,
+    "module": "esnext",
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "jsx": "preserve",
+    "incremental": true,
+    "baseUrl": ".",
+    "paths": {
+      "@propgo/types": ["./packages/types/src"],
+      "@propgo/types/*": ["./packages/types/src/*"],
+      "@propgo/utils": ["./packages/utils/src"],
+      "@propgo/utils/*": ["./packages/utils/src/*"],
+      "@propgo/api": ["./packages/api/src"],
+      "@propgo/api/*": ["./packages/api/src/*"],
+      "@propgo/compliance": ["./packages/compliance/src"],
+      "@propgo/compliance/*": ["./packages/compliance/src/*"],
+      "@propgo/constants": ["./packages/constants/src"],
+      "@propgo/constants/*": ["./packages/constants/src/*"],
+      "@propgo/hooks": ["./packages/hooks/src"],
+      "@propgo/hooks/*": ["./packages/hooks/src/*"],
+      "@propgo/theme": ["./packages/theme/src"],
+      "@propgo/theme/*": ["./packages/theme/src/*"],
+      "@propgo/integrations": ["./packages/integrations/src"],
+      "@propgo/integrations/*": ["./packages/integrations/src/*"],
+      "@propgo/config": ["./packages/config/src"],
+      "@propgo/config/*": ["./packages/config/src/*"],
+      "@propgo/ui": ["./packages/ui/src"],
+      "@propgo/ui/*": ["./packages/ui/src/*"]
+    }
+  },
+  "include": ["**/*.ts", "**/*.tsx"],
+  "exclude": ["node_modules"]
+} 

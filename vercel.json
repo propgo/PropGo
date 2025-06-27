@@ -1,0 +1,13 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "framework": "nextjs",
+  "installCommand": "pnpm install",
+  "buildCommand": "pnpm turbo run build --filter=@propgo/web",
+  "rootDirectory": "apps/web",
+  "build": {
+    "env": {
+      "TURBO_TOKEN": "YOUR_TURBO_TOKEN",
+      "TURBO_TEAM": "YOUR_TURBO_TEAM"
+    }
+  }
+} 

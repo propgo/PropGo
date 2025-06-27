@@ -1,0 +1,41 @@
+# Ignore node_modules but still allow .env files and essential configs
+#node_modules/
+#pnpm-lock.yaml
+#yarn.lock
+#package-lock.json
+
+# Build outputs (will be added later)
+# .next/
+# dist/
+# .cache/
+# .expo/
+
+# IDE/config clutter
+# .vscode/
+# .idea/
+# .DS_Store
+
+# Supabase temp/generated files
+# supabase/.temp/
+# supabase/.output/
+# supabase/functions/node_modules/
+
+# Public assets (images/docs/fonts)
+# public/images/
+# assets/
+# design-system/images/
+# static/
+
+# Ignore snapshots or heavy test outputs
+# __snapshots__/
+# coverage/
+# *.log
+
+# Allow these explicitly (so AI can help!)
+# !.env
+# !.env.local
+# !.env.example
+# !README.md
+# !tsconfig.json
+# !tailwind.config.js
+# !turbo.json
