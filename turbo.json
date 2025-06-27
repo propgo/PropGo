@@ -108,6 +108,7 @@
     "DATABASE_URL",
     "ANTHROPIC_API_KEY",
     "STRIPE_*",
-    "VERCEL_*"
+    "VERCEL_*",
+    "SENTRY_*"
   ]
 } 
