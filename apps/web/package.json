@@ -4,11 +4,11 @@
   "private": true,
   "description": "PropGo.my Web Application - AI-Enhanced B2B Real Estate SaaS Platform",
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "lint": "next lint",
-    "lint:fix": "next lint --fix",
+    "dev": "npx next dev",
+    "build": "npx next build",
+    "start": "npx next start",
+    "lint": "npx next lint",
+    "lint:fix": "npx next lint --fix",
     "type-check": "tsc --noEmit",
     "clean": "rm -rf .next"
   },
