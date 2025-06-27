@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import { ArrowRight, Check, Building, Bot, ListChecks, MessageCircle, FileText, Megaphone, MapPin, UserCheck, Scale, Landmark, Menu, Wand2, Bell, FileCheck, Shield, User, Star, Globe } from 'lucide-react'
 
 export default function HomePage() {
@@ -19,8 +20,8 @@ export default function HomePage() {
             </nav>
           </div>
           <div className="flex items-center space-x-4">
-            <span className="hidden md:inline-block text-secondary-600 hover:text-primary-600 font-medium cursor-pointer">Login</span>
-            <span className="bg-primary-600 text-white px-5 py-2 rounded-lg font-medium hover:bg-primary-700 transition cursor-pointer">Get Started</span>
+            <Link href="/auth/sign-in" className="hidden md:inline-block text-secondary-600 hover:text-primary-600 font-medium cursor-pointer">Login</Link>
+            <Link href="/auth/sign-up" className="bg-primary-600 text-white px-5 py-2 rounded-lg font-medium hover:bg-primary-700 transition cursor-pointer">Get Started</Link>
             <button className="md:hidden text-secondary-600">
               <Menu className="w-6 h-6" />
             </button>
@@ -35,8 +36,8 @@ export default function HomePage() {
             <h1 className="text-4xl md:text-5xl font-bold leading-tight mb-6">Malaysia's AI-Enhanced Real Estate Platform</h1>
             <p className="text-lg md:text-xl mb-8 text-primary-100">Equipping agents, lawyers, and bankers with AI tools, automation, and integrated pipelines for seamless property transactions.</p>
             <div className="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
-              <span className="bg-white text-primary-600 px-6 py-3 rounded-lg font-medium hover:bg-primary-50 transition text-center cursor-pointer">Start Free Trial</span>
-              <span className="border border-white text-white px-6 py-3 rounded-lg font-medium hover:bg-white/10 transition text-center cursor-pointer">Book a Demo</span>
+              <Link href="/auth/sign-up" className="bg-white text-primary-600 px-6 py-3 rounded-lg font-medium hover:bg-primary-50 transition text-center cursor-pointer">Start Free Trial</Link>
+              <Link href="/auth/sign-in" className="border border-white text-white px-6 py-3 rounded-lg font-medium hover:bg-white/10 transition text-center cursor-pointer">Book a Demo</Link>
             </div>
             <div className="mt-8 flex items-center">
               <div className="flex -space-x-2">
