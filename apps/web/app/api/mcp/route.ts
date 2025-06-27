@@ -1,7 +1,16 @@
 import mcpHandler from '../../../mcp.config';
 
 export const runtime = 'edge';
+export const dynamic = 'force-dynamic';
 
-export const GET = mcpHandler;
-export const POST = mcpHandler;
-export const DELETE = mcpHandler; 
+export async function GET(request: Request) {
+  return mcpHandler(request);
+}
+
+export async function POST(request: Request) {
+  return mcpHandler(request);
+}
+
+export async function DELETE(request: Request) {
+  return mcpHandler(request);
+} 
