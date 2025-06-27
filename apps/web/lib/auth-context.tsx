@@ -78,7 +78,6 @@ export function AuthProvider({ children, initialSession }: AuthProviderProps) {
           role: data.role,
           phone: data.phone,
         }
-        // Remove emailRedirectTo to use OTP verification instead
       }
     })
     
