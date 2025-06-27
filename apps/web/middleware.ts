@@ -27,10 +27,12 @@ export async function middleware(request: NextRequest) {
       }
     )
 
+    const { pathname } = request.nextUrl
+    
     // Get the current session
     const { data: { session }, error } = await supabase.auth.getSession()
-
-    const { pathname } = request.nextUrl
+    
+    console.log('Middleware - pathname:', pathname, 'session exists:', !!session)
 
     // Define public routes that don't require authentication
     const publicRoutes = [
@@ -79,21 +81,27 @@ export async function middleware(request: NextRequest) {
 
     // If logged in and trying to access auth pages, redirect appropriately
     if (session && isPublicRoute && pathname !== '/') {
-      console.log('User is logged in and on auth page, redirecting...')
+      console.log('User is logged in and on auth page, redirecting...', { pathname, userId: session.user.id })
       
-      // Check onboarding status before deciding where to redirect
-      const { data: profile } = await supabase
-        .from('profiles')
-        .select('onboarding_completed')
-        .eq('id', session.user.id)
-        .single()
+      try {
+        // Check onboarding status before deciding where to redirect
+        const { data: profile, error: profileError } = await supabase
+          .from('profiles')
+          .select('onboarding_completed')
+          .eq('id', session.user.id)
+          .single()
 
-      console.log('Profile onboarding status:', profile?.onboarding_completed)
+        console.log('Profile query result:', { profile, profileError })
 
-      // Redirect to onboarding if not completed, otherwise to dashboard
-      const redirectUrl = profile && !profile.onboarding_completed ? '/onboarding' : '/dashboard'
-      console.log('Redirecting to:', redirectUrl)
-      return NextResponse.redirect(new URL(redirectUrl, request.url))
+        // Redirect to onboarding if not completed, otherwise to dashboard
+        const redirectUrl = profile && !profile.onboarding_completed ? '/onboarding' : '/dashboard'
+        console.log('Redirecting to:', redirectUrl)
+        return NextResponse.redirect(new URL(redirectUrl, request.url))
+      } catch (error) {
+        console.error('Error checking profile:', error)
+        // Default to dashboard if there's an error
+        return NextResponse.redirect(new URL('/dashboard', request.url))
+      }
     }
 
     // Refresh session if needed
