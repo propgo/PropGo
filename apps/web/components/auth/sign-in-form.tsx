@@ -40,17 +40,22 @@ export function SignInForm() {
     try {
       setLoading(true)
       setError(null)
+      console.log('Form submit:', data.email)
 
       const result = await signIn(data)
+      console.log('Sign in form result:', result)
 
       if (!result.success) {
+        console.error('Sign in failed:', result.error)
         setError(result.error || 'Sign in failed')
         return
       }
 
+      console.log('Sign in successful, redirecting to dashboard')
       // Let middleware handle the redirect based on onboarding status
       router.push('/dashboard')
     } catch (err) {
+      console.error('Sign in form error:', err)
       setError('An unexpected error occurred. Please try again.')
     } finally {
       setLoading(false)

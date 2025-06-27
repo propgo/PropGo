@@ -79,6 +79,8 @@ export async function middleware(request: NextRequest) {
 
     // If logged in and trying to access auth pages, redirect appropriately
     if (session && isPublicRoute && pathname !== '/') {
+      console.log('User is logged in and on auth page, redirecting...')
+      
       // Check onboarding status before deciding where to redirect
       const { data: profile } = await supabase
         .from('profiles')
@@ -86,8 +88,11 @@ export async function middleware(request: NextRequest) {
         .eq('id', session.user.id)
         .single()
 
+      console.log('Profile onboarding status:', profile?.onboarding_completed)
+
       // Redirect to onboarding if not completed, otherwise to dashboard
       const redirectUrl = profile && !profile.onboarding_completed ? '/onboarding' : '/dashboard'
+      console.log('Redirecting to:', redirectUrl)
       return NextResponse.redirect(new URL(redirectUrl, request.url))
     }
 

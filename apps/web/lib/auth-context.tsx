@@ -49,6 +49,7 @@ export function AuthProvider({ children, initialSession }: AuthProviderProps) {
     const {
       data: { subscription },
     } = supabase.auth.onAuthStateChange(async (event: any, session: any) => {
+      console.log('Auth state change:', event, session?.user?.email)
       setSession(session)
       setUser(session?.user ?? null)
       setLoading(false)
@@ -56,6 +57,7 @@ export function AuthProvider({ children, initialSession }: AuthProviderProps) {
       // Handle auth events
       if (event === 'SIGNED_IN') {
         console.log('User signed in:', session?.user?.email)
+        console.log('Session details:', session)
       } else if (event === 'SIGNED_OUT') {
         console.log('User signed out')
       } else if (event === 'TOKEN_REFRESHED') {
@@ -116,15 +118,21 @@ export function AuthProvider({ children, initialSession }: AuthProviderProps) {
   }
 
   const signIn = async (data: any) => {
+    console.log('Attempting sign in for:', data.email)
+    
     const { data: result, error } = await supabase.auth.signInWithPassword({
       email: data.email,
       password: data.password,
     })
     
+    console.log('Sign in result:', { result, error })
+    
     if (error) {
+      console.error('Sign in error:', error)
       return { success: false, error: error.message }
     }
     
+    console.log('Sign in successful, session:', result.session)
     return { success: true, data: result }
   }
 
