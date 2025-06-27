@@ -67,7 +67,6 @@ const roleOptions = [
 export function SignUpForm() {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
-  const [success, setSuccess] = useState(false)
   const [showPassword, setShowPassword] = useState(false)
   const router = useRouter()
   const { signUp } = useAuth()
@@ -99,8 +98,9 @@ export function SignUpForm() {
         return
       }
 
-      setSuccess(true)
-      // Don't redirect immediately, show success message first
+      // Store email for verification and redirect
+      localStorage.setItem('verification_email', data.email)
+      router.push(`/auth/verify?email=${encodeURIComponent(data.email)}`)
     } catch (err) {
       setError('An unexpected error occurred. Please try again.')
     } finally {
@@ -108,35 +108,7 @@ export function SignUpForm() {
     }
   }
 
-  if (success) {
-    return (
-      <Card className="w-full max-w-md mx-auto">
-        <CardHeader className="space-y-1">
-          <CardTitle className="text-2xl font-bold text-center text-green-600">
-            Account Created Successfully!
-          </CardTitle>
-          <CardDescription className="text-center">
-            Please check your email to verify your account before signing in.
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          <div className="text-center space-y-4">
-            <div className="p-4 bg-green-50 border border-green-200 rounded-lg">
-              <p className="text-sm text-green-700">
-                We've sent a verification email to your inbox. Click the link in the email to activate your account.
-              </p>
-            </div>
-            <Button 
-              onClick={() => router.push('/auth/sign-in')} 
-              className="w-full"
-            >
-              Go to Sign In
-            </Button>
-          </div>
-        </CardContent>
-      </Card>
-    )
-  }
+
 
   return (
     <Card className="w-full max-w-md mx-auto">

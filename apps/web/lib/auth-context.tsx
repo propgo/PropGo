@@ -15,6 +15,8 @@ interface AuthContextType {
   session: Session | null
   loading: boolean
   signUp: (data: any) => Promise<any>
+  verifyOtp: (data: { email: string; token: string }) => Promise<any>
+  resendVerification: (email: string) => Promise<any>
   signIn: (data: any) => Promise<any>
   signOut: () => Promise<any>
   resetPassword: (data: any) => Promise<any>
@@ -75,8 +77,8 @@ export function AuthProvider({ children, initialSession }: AuthProviderProps) {
           full_name: data.fullName,
           role: data.role,
           phone: data.phone,
-        },
-        emailRedirectTo: `${window.location.origin}/auth/callback`
+        }
+        // Remove emailRedirectTo to use OTP verification instead
       }
     })
     
@@ -85,6 +87,33 @@ export function AuthProvider({ children, initialSession }: AuthProviderProps) {
     }
     
     return { success: true, data: result }
+  }
+
+  const verifyOtp = async (data: { email: string; token: string }) => {
+    const { data: result, error } = await supabase.auth.verifyOtp({
+      email: data.email,
+      token: data.token,
+      type: 'email'
+    })
+    
+    if (error) {
+      return { success: false, error: error.message }
+    }
+    
+    return { success: true, data: result }
+  }
+
+  const resendVerification = async (email: string) => {
+    const { error } = await supabase.auth.resend({
+      type: 'signup',
+      email: email
+    })
+    
+    if (error) {
+      return { success: false, error: error.message }
+    }
+    
+    return { success: true }
   }
 
   const signIn = async (data: any) => {
@@ -131,6 +160,8 @@ export function AuthProvider({ children, initialSession }: AuthProviderProps) {
     session,
     loading,
     signUp,
+    verifyOtp,
+    resendVerification,
     signIn,
     signOut,
     resetPassword,
