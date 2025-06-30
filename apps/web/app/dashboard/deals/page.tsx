@@ -124,17 +124,18 @@ export default function DealsPage() {
       user={mockUser}
       notificationCount={5}
     >
-      <div className="p-6 max-w-7xl mx-auto">
+      <div className="p-4 sm:p-6 max-w-7xl mx-auto">
         {/* Header Section */}
-        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-6">
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-6">
           <div>
-            <h1 className="text-2xl font-bold text-gray-900 mb-2">My Property Deals</h1>
-            <p className="text-gray-500">Track your offers, negotiations, and transaction progress</p>
+            <h1 className="text-xl sm:text-2xl font-bold text-gray-900 mb-2">My Property Deals</h1>
+            <p className="text-gray-500 text-sm sm:text-base">Track your offers, negotiations, and transaction progress</p>
           </div>
-          <div className="flex items-center space-x-3 mt-4 sm:mt-0">
-            <button className="bg-primary text-white px-4 py-2 rounded-lg text-sm hover:bg-secondary transition flex items-center">
-              <Plus className="w-4 h-4 mr-2" />
-              Submit New Offer
+          <div className="flex items-center space-x-3">
+            <button className="bg-primary text-white px-3 sm:px-4 py-2 rounded-lg text-sm hover:bg-secondary transition flex items-center whitespace-nowrap">
+              <Plus className="w-4 h-4 mr-1 sm:mr-2" />
+              <span className="hidden sm:inline">Submit New Offer</span>
+              <span className="sm:hidden">New Offer</span>
             </button>
           </div>
         </div>
@@ -198,7 +199,7 @@ export default function DealsPage() {
 
         {/* Filters */}
         <div className="bg-white rounded-xl shadow-sm p-4 mb-6">
-          <div className="flex flex-col sm:flex-row items-start sm:items-center space-y-4 sm:space-y-0 sm:space-x-4">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
             <select className="text-sm border border-gray-200 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-primary">
               <option>All Statuses</option>
               <option>Under Negotiation</option>

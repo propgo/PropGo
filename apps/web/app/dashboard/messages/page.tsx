@@ -152,6 +152,7 @@ const conversations = [
 export default function MessagesPage() {
   const [selectedConversation, setSelectedConversation] = useState(conversations[0])
   const [messageText, setMessageText] = useState('')
+  const [showConversationList, setShowConversationList] = useState(true)
 
   const formatTime = (timestamp: string) => {
     const date = new Date(timestamp)
@@ -181,7 +182,7 @@ export default function MessagesPage() {
     >
       <div className="h-[calc(100vh-120px)] flex bg-gray-50">
         {/* Conversations List */}
-        <div className="w-80 bg-white border-r border-gray-200 flex flex-col">
+        <div className={`${showConversationList ? 'w-full lg:w-80' : 'hidden lg:flex lg:w-80'} bg-white border-r border-gray-200 flex flex-col`}>
           {/* Header */}
           <div className="p-4 border-b border-gray-200">
             <div className="flex items-center justify-between mb-4">
@@ -207,7 +208,10 @@ export default function MessagesPage() {
             {conversations.map((conversation) => (
               <div 
                 key={conversation.id}
-                onClick={() => setSelectedConversation(conversation)}
+                onClick={() => {
+                  setSelectedConversation(conversation)
+                  setShowConversationList(false) // Hide conversation list on mobile when chat is selected
+                }}
                 className={`p-4 border-b border-gray-100 cursor-pointer hover:bg-gray-50 ${
                   selectedConversation.id === conversation.id ? 'bg-blue-50 border-blue-200' : ''
                 }`}
@@ -260,13 +264,22 @@ export default function MessagesPage() {
         </div>
 
         {/* Chat Area */}
-        <div className="flex-1 flex flex-col">
+        <div className={`${showConversationList ? 'hidden lg:flex' : 'flex w-full lg:flex-1'} flex-col`}>
           {selectedConversation ? (
             <>
               {/* Chat Header */}
               <div className="bg-white border-b border-gray-200 p-4">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center space-x-3">
+                    {/* Back Button for Mobile */}
+                    <button 
+                      onClick={() => setShowConversationList(true)}
+                      className="lg:hidden p-2 text-gray-400 hover:text-gray-600"
+                    >
+                      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                      </svg>
+                    </button>
                     <div className="relative">
                       <div className="w-10 h-10 bg-gray-200 rounded-full flex items-center justify-center">
                         <User className="w-5 h-5 text-gray-400" />

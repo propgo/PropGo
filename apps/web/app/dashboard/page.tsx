@@ -24,16 +24,16 @@ export default function DashboardPage() {
       user={mockUser}
       notificationCount={5}
     >
-      <div className="p-6 max-w-7xl mx-auto">
+      <div className="p-4 sm:p-6 max-w-7xl mx-auto">
         {/* Welcome & Quick Stats Section */}
         <div className="flex flex-col md:flex-row items-start gap-6 mb-8">
           <div className="bg-white rounded-xl shadow-sm p-6 flex-1 w-full">
-            <div className="flex justify-between items-start mb-4">
+            <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-2 sm:gap-4 mb-4">
               <div>
-                <h2 className="text-xl font-semibold mb-1">Welcome back, Sarah!</h2>
-                <p className="text-gray-500">Discover your next dream property with personalized insights.</p>
+                <h2 className="text-lg sm:text-xl font-semibold mb-1">Welcome back, Sarah!</h2>
+                <p className="text-gray-500 text-sm sm:text-base">Discover your next dream property with personalized insights.</p>
               </div>
-              <span className="text-xs text-gray-500">Last updated: Today, 2:15 PM</span>
+              <span className="text-xs text-gray-500 whitespace-nowrap">Last updated: Today, 2:15 PM</span>
             </div>
             
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mt-6 w-full">
@@ -123,18 +123,19 @@ export default function DashboardPage() {
 
         {/* Saved Properties Section */}
         <div className="mb-10">
-          <div className="flex items-center justify-between mb-6">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
             <h2 className="text-lg font-semibold">Saved Properties</h2>
-            <div className="flex items-center space-x-4">
+            <div className="flex items-center space-x-3 sm:space-x-4">
               <select className="text-sm border border-gray-200 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-primary">
                 <option>All Types</option>
                 <option>Condominiums</option>
                 <option>Landed</option>
                 <option>Rental</option>
               </select>
-              <button className="bg-primary text-white px-4 py-2 rounded-lg text-sm hover:bg-secondary transition flex items-center">
-                <Search className="w-4 h-4 mr-2" />
-                Browse Properties
+              <button className="bg-primary text-white px-3 sm:px-4 py-2 rounded-lg text-sm hover:bg-secondary transition flex items-center whitespace-nowrap">
+                <Search className="w-4 h-4 mr-1 sm:mr-2" />
+                <span className="hidden sm:inline">Browse Properties</span>
+                <span className="sm:hidden">Browse</span>
               </button>
             </div>
           </div>

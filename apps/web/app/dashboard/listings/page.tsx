@@ -114,17 +114,18 @@ export default function ListingsPage() {
       user={mockUser}
       notificationCount={5}
     >
-      <div className="p-6 max-w-7xl mx-auto">
+      <div className="p-4 sm:p-6 max-w-7xl mx-auto">
         {/* Header Section */}
-        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-6">
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-6">
           <div>
-            <h1 className="text-2xl font-bold text-gray-900 mb-2">My Saved Properties</h1>
-            <p className="text-gray-500">Manage your favorite properties and track inquiries</p>
+            <h1 className="text-xl sm:text-2xl font-bold text-gray-900 mb-2">My Saved Properties</h1>
+            <p className="text-gray-500 text-sm sm:text-base">Manage your favorite properties and track inquiries</p>
           </div>
-          <div className="flex items-center space-x-3 mt-4 sm:mt-0">
-            <button className="bg-primary text-white px-4 py-2 rounded-lg text-sm hover:bg-secondary transition flex items-center">
-              <Search className="w-4 h-4 mr-2" />
-              Browse More Properties
+          <div className="flex items-center space-x-3">
+            <button className="bg-primary text-white px-3 sm:px-4 py-2 rounded-lg text-sm hover:bg-secondary transition flex items-center whitespace-nowrap">
+              <Search className="w-4 h-4 mr-1 sm:mr-2" />
+              <span className="hidden sm:inline">Browse More Properties</span>
+              <span className="sm:hidden">Browse More</span>
             </button>
           </div>
         </div>
@@ -188,8 +189,9 @@ export default function ListingsPage() {
 
         {/* Filters and Search */}
         <div className="bg-white rounded-xl shadow-sm p-4 mb-6">
-          <div className="flex flex-col sm:flex-row items-start sm:items-center space-y-4 sm:space-y-0 sm:space-x-4">
-            <div className="relative flex-1">
+          <div className="flex flex-col space-y-4">
+            {/* Search Input */}
+            <div className="relative">
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
               <input 
                 type="text" 
@@ -197,25 +199,29 @@ export default function ListingsPage() {
                 className="w-full pl-10 pr-4 py-2 text-sm border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
               />
             </div>
-            <select className="text-sm border border-gray-200 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-primary">
-              <option>All Types</option>
-              <option>Condominiums</option>
-              <option>Landed Houses</option>
-              <option>Apartments</option>
-            </select>
-            <select className="text-sm border border-gray-200 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-primary">
-              <option>All Status</option>
-              <option>Available</option>
-              <option>Under Offer</option>
-              <option>Sold/Rented</option>
-            </select>
-            <select className="text-sm border border-gray-200 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-primary">
-              <option>All Inquiries</option>
-              <option>No Inquiry</option>
-              <option>Pending Response</option>
-              <option>Responded</option>
-              <option>Viewing Scheduled</option>
-            </select>
+            
+            {/* Filter Row */}
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+              <select className="text-sm border border-gray-200 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-primary">
+                <option>All Types</option>
+                <option>Condominiums</option>
+                <option>Landed Houses</option>
+                <option>Apartments</option>
+              </select>
+              <select className="text-sm border border-gray-200 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-primary">
+                <option>All Status</option>
+                <option>Available</option>
+                <option>Under Offer</option>
+                <option>Sold/Rented</option>
+              </select>
+              <select className="text-sm border border-gray-200 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-primary">
+                <option>All Inquiries</option>
+                <option>No Inquiry</option>
+                <option>Pending Response</option>
+                <option>Responded</option>
+                <option>Viewing Scheduled</option>
+              </select>
+            </div>
           </div>
         </div>
 
